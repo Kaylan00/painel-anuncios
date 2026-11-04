@@ -41,7 +41,10 @@ export function ListingsPage() {
   const pendingIds = useAppSelector(selectPendingIds);
   const currentRows = useAppSelector(selectPageRows);
   // A digitação atualiza o campo na hora; a lista acompanha quando o React tiver folga.
-  const rows = useDeferredValue(currentRows);
+  const deferredRows = useDeferredValue(currentRows);
+  // Sair de uma lista vazia não espera: o valor adiado ainda vazio mostraria "nenhum anúncio"
+  // por um quadro logo depois da carga.
+  const rows = deferredRows.length === 0 ? currentRows : deferredRows;
   const isDesktop = useMediaQuery('(min-width: 900px)');
   const [openId, setOpenId] = useState<string | null>(null);
 

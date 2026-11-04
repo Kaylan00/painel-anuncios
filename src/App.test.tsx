@@ -56,6 +56,19 @@ describe('fluxo completo', () => {
     expect(screen.getByText('1 resultado')).toBeInTheDocument();
   });
 
+  it('não mostra "nenhum anúncio" em nenhum momento da carga', async () => {
+    const seen: boolean[] = [];
+    const observer = new MutationObserver(() => {
+      seen.push(document.body.textContent.includes('Nenhum anúncio'));
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    renderApp(quietApi(rows));
+    await screen.findByRole('button', { name: 'Sofá retrátil 3 lugares' });
+    observer.disconnect();
+    expect(seen.length).toBeGreaterThan(0);
+    expect(seen).not.toContain(true);
+  });
+
   it('filtro sem resultado oferece limpar', async () => {
     const { user } = renderApp(quietApi(rows));
     await screen.findByRole('button', { name: 'Sofá retrátil 3 lugares' });
