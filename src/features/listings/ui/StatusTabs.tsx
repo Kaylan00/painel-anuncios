@@ -2,7 +2,10 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { formatInt } from '../../../lib/format';
 import { statusChanged } from '../model/filtersSlice';
 import type { FiltersState } from '../model/filtersSlice';
-import { selectStatusCounts } from '../model/selectors';
+import { selectLoadStatus, selectStatusCounts } from '../model/selectors';
+
+/** Reserva a largura das contagens durante a carga, para as abas não andarem quando elas chegam. */
+const PLACEHOLDER = { todos: 1000, ativo: 587, pausado: 156, expirado: 146, vendido: 111 };
 
 const TABS: Array<{ value: FiltersState['status']; label: string }> = [
   { value: 'todos', label: 'Todos' },
@@ -15,9 +18,11 @@ const TABS: Array<{ value: FiltersState['status']; label: string }> = [
 export function StatusTabs() {
   const dispatch = useAppDispatch();
   const current = useAppSelector((state) => state.filters.status);
-  const counts = useAppSelector(selectStatusCounts);
+  const real = useAppSelector(selectStatusCounts);
+  const ready = useAppSelector(selectLoadStatus) === 'ready';
+  const counts = ready ? real : PLACEHOLDER;
   return (
-    <div className="tabs" role="group" aria-label="Filtrar por status">
+    <div className={ready ? 'tabs' : 'tabs is-loading'} role="group" aria-label="Filtrar por status">
       {TABS.map((tab) => (
         <button
           key={tab.value}

@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { formatInt } from '../../../lib/format';
-import { selectBulkPlan, selectFilteredListings, selectPageInfo, selectSelectedIds } from '../model/selectors';
+import {
+  selectBulkPlan,
+  selectFilteredListings,
+  selectLoadStatus,
+  selectPageInfo,
+  selectSelectedIds,
+} from '../model/selectors';
 import { rowsSelected, selectionCleared } from '../model/selectionSlice';
 import { useListingActions } from '../useListingActions';
 
@@ -12,6 +18,7 @@ import { useListingActions } from '../useListingActions';
 export function ResultsToolbar({ pageIds, allOnPageSelected }: { pageIds: string[]; allOnPageSelected: boolean }) {
   const dispatch = useAppDispatch();
   const { runBulk } = useListingActions();
+  const ready = useAppSelector(selectLoadStatus) === 'ready';
   const info = useAppSelector(selectPageInfo);
   const plan = useAppSelector(selectBulkPlan);
   const selectedIds = useAppSelector(selectSelectedIds);
@@ -24,7 +31,9 @@ export function ResultsToolbar({ pageIds, allOnPageSelected }: { pageIds: string
   return (
     <div className="toolbar">
       <div className="toolbar__count" aria-live="polite">
-        {count === 0 ? (
+        {!ready ? (
+          <span className="muted">Carregando anúncios</span>
+        ) : count === 0 ? (
           <span>
             {formatInt(info.total)} {info.total === 1 ? 'resultado' : 'resultados'}
           </span>

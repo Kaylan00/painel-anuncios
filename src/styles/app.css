@@ -330,6 +330,11 @@ h1 {
   order: 1;
 }
 
+.summary.is-loading,
+.tabs.is-loading .tabs__count {
+  visibility: hidden;
+}
+
 /* Abas de status */
 
 .tabs {
@@ -713,7 +718,7 @@ th[aria-sort] .th-sort {
 }
 
 .loading__row {
-  height: 48px;
+  height: 49.4px;
   border-bottom: 1px solid var(--rule);
   background: linear-gradient(var(--skeleton), var(--skeleton)) 12px 50% / 45% 12px no-repeat;
 }

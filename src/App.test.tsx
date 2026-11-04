@@ -45,6 +45,9 @@ describe('fluxo completo', () => {
   it('carrega a lista e o resumo, e a busca filtra', async () => {
     const { user } = renderApp(quietApi(rows));
     expect(screen.getByRole('status', { name: 'Carregando anúncios' })).toBeInTheDocument();
+    // O entorno já está na tela durante a carga, para nada pular quando os dados chegarem.
+    expect(screen.getByRole('searchbox', { name: 'Buscar' })).toBeInTheDocument();
+    expect(screen.queryByRole('navigation', { name: 'Paginação' })).not.toBeInTheDocument();
     expect(await screen.findByRole('button', { name: 'Sofá retrátil 3 lugares' })).toBeInTheDocument();
     expect(screen.getByText('no ar, de 3')).toBeInTheDocument();
 

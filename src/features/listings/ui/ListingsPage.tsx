@@ -61,7 +61,7 @@ export function ListingsPage() {
     <main className="page">
       <div className="page__head">
         <h1>Meus anúncios</h1>
-        {loadStatus === 'ready' && <AccountSummary />}
+        {loadStatus !== 'failed' && <AccountSummary />}
       </div>
 
       {loadStatus === 'failed' ? (
@@ -71,15 +71,16 @@ export function ListingsPage() {
             Tentar de novo
           </button>
         </div>
-      ) : loadStatus !== 'ready' ? (
-        <LoadingRows />
       ) : (
         <>
+          {/* O entorno da lista já aparece na carga: assim nada muda de lugar quando os dados chegam. */}
           <StatusTabs />
           <FilterBar compact={!isDesktop} />
           <ResultsToolbar pageIds={pageIds} allOnPageSelected={allOnPageSelected} />
 
-          {rows.length === 0 ? (
+          {loadStatus !== 'ready' ? (
+            <LoadingRows />
+          ) : rows.length === 0 ? (
             <div className="state">
               <p>Nenhum anúncio com esses filtros.</p>
               {hasFilters && (
@@ -115,7 +116,7 @@ export function ListingsPage() {
             </>
           )}
 
-          <Pagination />
+          {loadStatus === 'ready' && <Pagination />}
         </>
       )}
 
