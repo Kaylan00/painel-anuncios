@@ -97,7 +97,7 @@ Lighthouse 13.6, na mesma data:
 | | Performance | Acessibilidade | Boas práticas | SEO | LCP | CLS |
 | --- | --- | --- | --- | --- | --- | --- |
 | Celular | 100 | 100 | 100 | 100 | 1,2 s | 0 |
-| Desktop | 100 | 100 | 100 | 100 | 0,3 s | 0 |
+| Desktop | 100 | 100 | 100 | 100 | 0,4 s | 0 |
 
 ### Regras do produto
 
