@@ -56,6 +56,7 @@ html {
   -webkit-text-size-adjust: 100%;
   /* Reserva o espaço da barra de rolagem: a página não anda para o lado quando a lista cresce. */
   scrollbar-gutter: stable;
+  background: var(--bg);
 }
 
 body {
@@ -235,7 +236,7 @@ input[type='checkbox'] {
   gap: 12px;
   min-height: 48px;
   /* Alinha com a coluna de conteúdo em telas largas. */
-  padding: 0 max(16px, calc((100vw - 1320px) / 2 + 16px));
+  padding: 0 max(16px, calc((100% - 1320px) / 2 + 16px));
   background: var(--surface);
   border-bottom: 1px solid var(--rule);
 }
